@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="static/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="static/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="static/jquery.flot.js"></script>
+    <script type="text/javascript" src="static/socket.io.js"></script>
+    <script type="text/javascript" src="static/js/livecharts.js"></script>
+
+  
+</head>
+
+
+
+<body>
+  <h1>Live CPU graph</h1>
+  <div id="cpugraph" style="width: 600px; height: 300px;"></div>
+  <div id="description">This graph shows the live CPU usage as reported
+  by /proc/stat on Linux-like systems.</div>
+
+  <div id="memgraph"  style="width: 600px; height: 300px;"></div>
+  <div id="description">This graph shows the live Memory usage as reported
+  by /proc/stat on Linux-like systems.</div>
+
+</body>
+</html>
