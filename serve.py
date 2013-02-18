@@ -52,6 +52,8 @@ class Application(object):
                 content_type = "text/css"
             elif path.endswith(".swf"):
                 content_type = "application/x-shockwave-flash"
+            elif path.endswith(".png"):
+                content_type = "image/png"
             else:
                 content_type = "text/html"
 
