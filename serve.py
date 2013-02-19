@@ -1,4 +1,3 @@
-from gevent import monkey; monkey.patch_all()
 import gevent
 import psutil
 
@@ -11,15 +10,10 @@ from socketio.mixins import BroadcastMixin
 class CPUNamespace(BaseNamespace, BroadcastMixin):
     def recv_connect(self):
         def sendcpu():
-            prev = None
             while True:
-                vals = psutil.cpu_percent(interval=1, percpu=True)
-
-                if prev:
-                    percent = (sum(vals) - sum(prev))
-                    self.emit('cpu_data', {'point': percent})
-                prev = vals
-                gevent.sleep(0.1)
+                val = psutil.cpu_percent()
+                self.emit('cpu_data', {'point': val})
+                gevent.sleep(0.5)
         self.spawn(sendcpu)
 
 
@@ -29,7 +23,7 @@ class MemoryNamespace(BaseNamespace, BroadcastMixin):
             while True:
                 val = psutil.phymem_usage().percent
                 self.emit('mem_data', {'point': val})
-                gevent.sleep(1.0)
+                gevent.sleep(0.5)
         self.spawn(sendmem)
 
 
@@ -75,7 +69,11 @@ def not_found(start_response):
 
 
 if __name__ == '__main__':
-    print 'Listening on port http://0.0.0.0:8080 and on port 10843 (flash policy server)'
+    print 'Listening on port http://0.0.0.0:8080'
+    # SocketIOServer(('0.0.0.0', 8080), Application(),
+    #     resource="socket.io", policy_server=True,
+    #     policy_listener=('0.0.0.0', 10843)).serve_forever()
+
     SocketIOServer(('0.0.0.0', 8080), Application(),
-        resource="socket.io", policy_server=True,
-        policy_listener=('0.0.0.0', 10843)).serve_forever()
+        resource="socket.io", policy_server=True ).serve_forever()
+
