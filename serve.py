@@ -13,7 +13,7 @@ class CPUNamespace(BaseNamespace, BroadcastMixin):
             while True:
                 val = psutil.cpu_percent()
                 self.emit('cpu_data', {'point': val})
-                gevent.sleep(0.5)
+                gevent.sleep(5.0)
         self.spawn(sendcpu)
 
 
@@ -23,7 +23,7 @@ class MemoryNamespace(BaseNamespace, BroadcastMixin):
             while True:
                 val = psutil.phymem_usage().percent
                 self.emit('mem_data', {'point': val})
-                gevent.sleep(0.5)
+                gevent.sleep(5.0)
         self.spawn(sendmem)
 
 
